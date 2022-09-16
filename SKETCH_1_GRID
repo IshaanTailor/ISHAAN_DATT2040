@@ -1,0 +1,138 @@
+/*
+NAME: ISHAAN TAILOR
+SKETCH 1: GRIDS
+LAST EDIT: SEPT 16, 2022
+DUE DATE:  SEPT 16 2022
+DESC: In this sketc, I took some ideas from some of the examples and included some of my own aswell. 
+      For example I have the random dice effect to switch colour, but instead of creating a line it creates either a 
+      circle or a square with a random colour. A grid of 16 by 16 shapes show up and there are different coloured sections
+      instead of just random colours everywhere. This was my first time working with Processing and I'm getting used to using it
+*/
+
+//Define the how many rows and columns there are
+int cols = 16;
+int rows = 16;
+
+//variables to hold stepsize (spacing in the grid)
+int stepx, stepy;
+
+//variables to store the num and dice integers
+int num = 0;
+int dice = 0;
+
+//setup of the canvas
+void setup() {
+  size(600, 600);
+  
+  //value of step sizes
+  stepx = (width / cols);
+  stepy = (height / rows);
+  
+  //don't loop
+  noLoop();
+}
+
+
+//drawing loop -- keeps the sketch running in realtime
+void draw() {
+  //set background to dark gray
+  background(30);
+  
+  //loop through all boxes
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      float x = i*stepx+15;
+      float y = j*stepy+15;
+      
+      //randomize stroke weight and which shape
+      strokeWeight(random(10));
+      int shape = int(random(2));
+      
+      //keep adding to num everytime to have sections of colours
+      if (num < 600)
+      {
+        num++;
+      }
+      else
+      {
+        num = 0;
+      }
+      
+      //apply number to dice based on value of num
+      if (num < 100)
+      {
+        dice = 0;
+      }
+      else if (num < 200)
+      {
+        dice = 1;
+      }
+      else if (num < 300)
+      {
+        dice = 2;
+      }
+      else if (num < 400)
+      {
+        dice = 3;
+      }
+      else if (num < 500)
+      {
+        dice = 4;
+      }
+      else 
+      {
+        dice = 5;
+      }
+      
+      //pick shape based on random number
+      if (shape == 0)
+      {
+        circle(x, y, 10);
+      }
+      else
+      {
+        square(x, y, 10);
+      }
+      
+      
+      //switch colour based on number given from increasing value
+      switch(dice) {
+      case 0:
+        //color = red
+        stroke(255, 8, 37);
+        fill(i, j, i, j);
+        break;
+      case 1:
+        //color = blue
+        stroke(8, 216, 255);
+        fill(i, j, i, j);
+        break;
+      case 2:
+        //color = pink
+        stroke(255, 8, 227);
+        fill(i, j, i, j);
+        break;
+      case 3:
+        //color = yellow
+        stroke(247, 223, 0);
+        fill(i, j, i, j);
+        break;
+      case 4:
+        //colour = white
+        stroke(255);
+        fill(j,i,j,i);
+        break;
+      case 5:
+        //colour = black
+        stroke(0);
+        fill(j,i,j,i);
+        break;
+      }
+    }
+  }
+}
+
+//when mouse is pressed redraw the scene
+void mousePressed() {
+  redraw();
+}
